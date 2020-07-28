@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //TIMER
 
-    const promoEndDay = '2020-08-10';
+    const promoEndDay = '2020-08-20';
 
     function getTimeRem(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -68,18 +68,35 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function dayCase(days, selector) {
         const timerBlock = document.querySelector(selector),
-            usedNode = timerBlock.childNodes[2];
+            usedNode = timerBlock.childNodes[2],
+            Array1 = ['2', '3', '4'],
+            Array2 = ["0", "5", "6", "7", "8", "9"];
 
-        const firstArray = ["0", "5", "6", "7", "8", "9"];
-        const secondArray = ["2", "3", "4"];
+        switch (days.length) {
 
-        const lastNum = days.charAt(days.length - 1);
-        if (firstArray.includes(lastNum)) {
-            usedNode.nodeValue = 'Дней';
-        } else if (secondArray.includes(lastNum)) {
-            usedNode.nodeValue = 'Дня';
-        } else usedNode.nodeValue = 'День';
+            case 1:
+                if (Array1.includes(days)) {
+                    usedNode.nodeValue = 'Дня';
+                }
+                else if (days == 1) {
+                    usedNode.nodeValue = 'День';
+                }
+
+                break;
+            case 2:
+                const lastDigit = days.charAt(days.length - 1);
+                if (Array1.includes(lastDigit)) {
+                    usedNode.nodeValue = 'Дня';
+                } else
+                    if (Array2.includes(lastDigit)) {
+                        usedNode.nodeValue = 'Дней';
+                    } else if (lastDigit == 1) {
+                        usedNode.nodeValue = 'День';
+                        break;
+                    }
+        }
     }
+
 
     function setTimer(selector, endtime) {
         const timer = document.querySelector(selector),
