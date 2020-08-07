@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //TIMER
 
-    const promoEndDay = '2020-08-20';
+    const promoEndDay = '2020-08-29';
 
     function getTimeRem(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -66,36 +66,47 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function dayCase(days, selector) {
-        const timerBlock = document.querySelector(selector),
-            usedNode = timerBlock.childNodes[2],
-            Array1 = ['2', '3', '4'],
-            Array2 = ["0", "5", "6", "7", "8", "9"];
+    // function dayCase(days, selector) {
+    //     const timerBlock = document.querySelector(selector),
+    //         usedNode = timerBlock.childNodes[2],
+    //         Array1 = ['2', '3', '4'],
+    //         Array2 = ["0", "5", "6", "7", "8", "9"];
 
-        switch (days.length) {
+    //     switch (days.length) {
 
-            case 1:
-                if (Array1.includes(days)) {
-                    usedNode.nodeValue = 'Дня';
-                }
-                else if (days == 1) {
-                    usedNode.nodeValue = 'День';
-                }
+    //         case 1:
+    //             if (Array1.includes(days)) {
+    //                 usedNode.nodeValue = 'Дня';
+    //                 break;
+    //             } else if (days == 1) {
+    //                 usedNode.nodeValue = 'День';
+    //                 break;
+    //             }
 
-                break;
-            case 2:
-                const lastDigit = days.charAt(days.length - 1);
-                if (Array1.includes(lastDigit)) {
-                    usedNode.nodeValue = 'Дня';
-                } else
-                    if (Array2.includes(lastDigit)) {
-                        usedNode.nodeValue = 'Дней';
-                    } else if (lastDigit == 1) {
-                        usedNode.nodeValue = 'День';
-                        break;
-                    }
-        }
-    }
+
+    //             case 2:
+
+    //                 if (9 < days < 21) {
+    //                     usedNode.nodeValue = 'Дней';
+
+    //                 } else {
+
+    //                     const lastDigit = days.charAt(days.length - 1);
+    //                     if (Array1.includes(parseInt(lastDigit))) {
+    //                         usedNode.nodeValue = 'Дня';
+
+    //                     } else
+    //                     if (Array2.includes(parseInt(lastDigit))) {
+    //                         usedNode.nodeValue = 'Дней';
+
+    //                     } else if (parseInt(lastDigit) === 1) {
+    //                         usedNode.nodeValue = 'День';
+
+    //                     }
+    //                 }
+
+    //     }
+    // }
 
 
     function setTimer(selector, endtime) {
@@ -125,7 +136,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     setTimer('.timer', promoEndDay);
-    dayCase(getTimeRem(promoEndDay).days.toString(), '.timer__block');
+    //dayCase(getTimeRem(promoEndDay).days.toString(), '.timer__block');
 
     //Modal
 
@@ -133,19 +144,25 @@ window.addEventListener('DOMContentLoaded', () => {
         modal = document.querySelector('.modal'),
         modalCloseBtn = document.querySelector('[data-close]');
 
-    modalTrigger.forEach(btn => {
-
-        btn.addEventListener('click', () => {
-            modal.classList.toggle('show');
-            document.body.style.overflow = 'hidden';
-        });
-
-    });
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
+    }
 
     function closeModal() {
-        modal.classList.toggle('show');
+        modal.classList.add('hide');
+        modal.classList.remove('show');
         document.body.style.overflow = '';
+        
     }
+
+    modalTrigger.forEach(btn => {
+
+        btn.addEventListener('click', openModal);
+
+    });
 
     modalCloseBtn.addEventListener('click', closeModal);
 
@@ -160,4 +177,15 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    const modalTimerId = setTimeout(openModal, 5000);
+    
+    function showModalAfterScroll(){
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModal();
+            window.removeEventListener('scroll', showModalAfterScroll);
+        }
+    }
+    
+    window.addEventListener('scroll', showModalAfterScroll);
 });
