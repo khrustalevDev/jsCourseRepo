@@ -155,7 +155,7 @@ window.addEventListener('DOMContentLoaded', () => {
         modal.classList.add('hide');
         modal.classList.remove('show');
         document.body.style.overflow = '';
-        
+
     }
 
     modalTrigger.forEach(btn => {
@@ -179,13 +179,52 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     const modalTimerId = setTimeout(openModal, 5000);
-    
-    function showModalAfterScroll(){
+
+    function showModalAfterScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
             window.removeEventListener('scroll', showModalAfterScroll);
         }
     }
-    
+
     window.addEventListener('scroll', showModalAfterScroll);
+
+    //Menu card clss
+
+    class MenuCard {
+        constructor(src, alt, title, text, price, parentSelector) {
+            this.src = src;
+            this.alt = alt;
+            this.title = title;
+            this.text = text;
+            this.price = price;
+            this.transfer = 27;
+            this.parent = document.querySelector(parentSelector);
+            this.changeToUAH();
+        }
+
+        changeToUAH() {
+            this.price = this.price * this.transfer;
+        }
+
+        render() {
+            const element = document.createElement('div');
+            element.innerHTML = `<div class="menu__item">
+            <img src="img/tabs/vegy.jpg" alt="vegy">
+            <h3 class="menu__item-subtitle">Меню "Фитнес"</h3>
+            <div class="menu__item-descr">Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих
+                овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной
+                ценой
+                и высоким качеством!
+            </div>
+            <div class="menu__item-divider"></div>
+            <div class="menu__item-price">
+                <div class="menu__item-cost">Цена:</div>
+                <div class="menu__item-total"><span>229</span> грн/день</div>
+            </div>
+        </div>`;
+
+
+        }
+    }
 });
