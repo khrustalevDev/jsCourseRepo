@@ -231,7 +231,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const getResource = async (url) => {
         const res = await fetch(url);
 
-        if(!res.ok){
+        if (!res.ok) {
             throw new Error(`Could not fetch: ${url}, status: ${res.status}`);
         }
 
@@ -239,11 +239,17 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     getResource('http://localhost:3000/menu')
-    .then(data => {
-        data.forEach(({img, altimg, title, descr, price}) =>{
-            new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+        .then(data => {
+            data.forEach(({
+                img,
+                altimg,
+                title,
+                descr,
+                price
+            }) => {
+                new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+            });
         });
-    });
 
     // Forms
 
@@ -260,14 +266,13 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     const postData = async (url, data) => {
-        const res = await fetch(url,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: data
-            });
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: data
+        });
 
         return await res.json();
     };
@@ -329,7 +334,55 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     fetch('http://localhost:3000/menu')
-        .then(data => data.json())
-        .then(data => console.log(data));
+        .then(data => data.json());
+    //.then(data => console.log(data));
 
+    slider();
+
+    function slider() {
+        const slides = document.querySelectorAll('.offer__slide'),
+            sliderCounter = document.querySelector('.offer__slider-counter'),
+            arrowPrev = sliderCounter.querySelector('.offer__slider-prev'),
+            arrowNext = sliderCounter.querySelector('.offer__slider-next');
+
+        let slideIndex = 1,
+            selectedSlide = sliderCounter.querySelector('#current'),
+            totalSlides = sliderCounter.querySelector('#total');
+
+        initSlider();
+
+        function initSlider() {
+            totalSlides.textContent = `0${slides.length}`;
+            selectedSlide.textContent = `0${slideIndex}`;
+            showSlide(slideIndex);
+        }
+
+        function showSlide(index) {
+            if (index > slides.length) {
+                slideIndex = 1;
+            }
+            if (index < 1) {
+                slideIndex = slides.length;
+            }
+            slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+            slides[slideIndex - 1].style.display = 'block';
+        }
+
+        function changeSlide(value) {
+            showSlide(slideIndex += value);
+            selectedSlide.textContent = `0${slideIndex}`;
+        }
+
+        arrowNext.addEventListener('click', () => {
+            changeSlide(1);
+        });
+
+        arrowPrev.addEventListener('click', () => {
+            changeSlide(-1);
+        });
+
+
+    }
 });
