@@ -66,49 +66,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // function dayCase(days, selector) {
-    //     const timerBlock = document.querySelector(selector),
-    //         usedNode = timerBlock.childNodes[2],
-    //         Array1 = ['2', '3', '4'],
-    //         Array2 = ["0", "5", "6", "7", "8", "9"];
-
-    //     switch (days.length) {
-
-    //         case 1:
-    //             if (Array1.includes(days)) {
-    //                 usedNode.nodeValue = 'Дня';
-    //                 break;
-    //             } else if (days == 1) {
-    //                 usedNode.nodeValue = 'День';
-    //                 break;
-    //             }
-
-
-    //             case 2:
-
-    //                 if (9 < days < 21) {
-    //                     usedNode.nodeValue = 'Дней';
-
-    //                 } else {
-
-    //                     const lastDigit = days.charAt(days.length - 1);
-    //                     if (Array1.includes(parseInt(lastDigit))) {
-    //                         usedNode.nodeValue = 'Дня';
-
-    //                     } else
-    //                     if (Array2.includes(parseInt(lastDigit))) {
-    //                         usedNode.nodeValue = 'Дней';
-
-    //                     } else if (parseInt(lastDigit) === 1) {
-    //                         usedNode.nodeValue = 'День';
-
-    //                     }
-    //                 }
-
-    //     }
-    // }
-
-
     function setTimer(selector, endtime) {
         const timer = document.querySelector(selector),
             days = document.querySelector('#days'),
@@ -136,7 +93,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     setTimer('.timer', promoEndDay);
-    //dayCase(getTimeRem(promoEndDay).days.toString(), '.timer__block');
 
     //Modal
 
@@ -481,41 +437,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
             });
         });
-
-        //     initSlider();
-
-        //     function initSlider() {
-        //         totalSlides.textContent = `0${slides.length}`;
-        //         selectedSlide.textContent = `0${slideIndex}`;
-        //         showSlide(slideIndex);
-        //     }
-
-        //     function showSlide(index) {
-        //         if (index > slides.length) {
-        //             slideIndex = 1;
-        //         }
-        //         if (index < 1) {
-        //             slideIndex = slides.length;
-        //         }
-        //         slides.forEach(slide => {
-        //             slide.style.display = 'none';
-        //         });
-        //         slides[slideIndex - 1].style.display = 'block';
-        //     }
-
-        //     function changeSlide(value) {
-        //         showSlide(slideIndex += value);
-        //         selectedSlide.textContent = `0${slideIndex}`;
-        //     }
-
-        //     arrowNext.addEventListener('click', () => {
-        //         changeSlide(1);
-        //     });
-
-        //     arrowPrev.addEventListener('click', () => {
-        //         changeSlide(-1);
-        //     });
-
 
     }
 });
